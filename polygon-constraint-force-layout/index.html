@@ -17,6 +17,7 @@
     </div>
     <script src="http://d3js.org/d3.v6.min.js"></script>
     <script src="./src/polygonForceConstraint.js"></script>
+    <script src="./src/calculatePolygonCentroid.js"></script>
     <script type="module">
       import data from './data/mock.js';
 
@@ -40,8 +41,7 @@
       ];
 
       // 多边形质心
-      let polygonSiteX = 757;
-      let polygonSiteY = 369;
+      const [polygonSiteX, polygonSiteY] = calculatePolygonCentroid(polygon);
 
       // 布局计算
       const simulation = d3
