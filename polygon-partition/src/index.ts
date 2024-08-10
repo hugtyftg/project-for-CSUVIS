@@ -35,7 +35,7 @@ const setting = {
   // 4.设置每个数据集的标识符，保证分割结果一致
   const datasetIndentifier = 0;
 
-  // 5.根据树形结构分割画布
+  // 5.根据树形结构分割画布，并将特殊pod中心化
   let canvasSpliter = nestedVoronoi(datasetIndentifier).clip(rectanglePolygon);
   canvasSpliter(data);
   /* ------------------cnt中心化----------------- */
@@ -66,7 +66,7 @@ const setting = {
     .range([0.8, 0.55])
     .clamp(true);
 
-  // 7.渲染各区域
+  // 7.渲染各多边形区域及其标签
   render({
     selector: '#container',
     setting,
