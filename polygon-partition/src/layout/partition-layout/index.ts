@@ -1,3 +1,3 @@
 import { nestedVoronoi } from './nestedVoronoi';
-
-export { nestedVoronoi };
+import { centralizing } from './utils';
+export { nestedVoronoi, centralizing };

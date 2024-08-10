@@ -1,4 +1,4 @@
-import { nestedVoronoi } from './layout';
+import { nestedVoronoi, centralizing } from './layout';
 import { scaleLinear } from 'd3-scale';
 import getHierarchalData from './dataPrehandle';
 import render from './render';
@@ -38,6 +38,11 @@ const setting = {
   // 5.根据树形结构分割画布
   let canvasSpliter = nestedVoronoi(datasetIndentifier).clip(rectanglePolygon);
   canvasSpliter(data);
+  /* ------------------cnt中心化----------------- */
+  for (let i = 0; i < (data.children as any).length; i++) {
+    centralizing((data as any).children[i], 'name', 'cnt');
+  }
+  /* ------------------cnt中心化----------------- */
 
   // 6.（可选）设置分割区域根据权重设置颜色插值范围
   let min = Infinity; // 记录最少的设备数目

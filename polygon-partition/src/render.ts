@@ -78,6 +78,9 @@ const render = (opts: RenderOpts) => {
       if (d['data']['hierarchy'] === 'az') {
         return interpolateRdBu(colorScale(d.value));
       } else if (d['data']['hierarchy'] === 'pod') {
+        if (d.data.name === 'cnt') {
+          return 'pink';
+        }
         if (d.depth === 1) {
           return 'transparent';
         } else {
