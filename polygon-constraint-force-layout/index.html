@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <svg id="chart"></svg>
+    </div>
+    <script src="http://d3js.org/d3.v6.min.js"></script>
+    <script src="./src/polygonForceConstraint.js"></script>
+    <script type="module">
+      import data from './data/mock.js';
+
+      // 样式配置
+      let width = 200;
+      let height = width;
+      const nodeStrokeWidth = 1;
+      const nodeRadius = 5;
+
+      // 图数据
+      const nodes = data.nodes;
+      const links = data.links;
+
+      // 多边形数据
+      let polygon = [
+        [800.5199476556365, 460.74438869020344],
+        [663.4940667427518, 443.50564666079856],
+        [693.8467788929881, 258.61407502480455],
+        [856.9659737635482, 341.2507784190612],
+        [800.5199476556365, 460.74438869020344],
+      ];
+
+      // 多边形质心
+      let polygonSiteX = 757;
+      let polygonSiteY = 369;
+
+      // 布局计算
+      const simulation = d3
+        .forceSimulation(nodes)
+        .force(
+          'link',
+          d3.forceLink(links).id((d) => d.id)
+        )
+        .force(
+          'collide',
+          d3
+            .forceCollide()
+            .radius(nodeRadius * 2)
+            .strength(1)
+        )
+        .force('x', d3.forceX(polygonSiteX))
+        .force('y', d3.forceY(polygonSiteY))
+        .on('tick', ticked);
+      // 每次tick都进行多边形限制的力导引计算
+      const posTicker = polygonConstraintAccessor(polygon, 5);
+      function ticked() {
+        node
+          .attr('cx', (d) => {
+            d.x = posTicker(5, nodeStrokeWidth, d.y, d.x, 'x');
+            return d.x;
+          })
+          .attr('cy', (d) => {
+            d.y = posTicker(5, nodeStrokeWidth, d.x, d.y, 'y');
+            return d.y;
+          });
+        link
+          .attr('x1', (d) => d.source.x)
+          .attr('y1', (d) => d.source.y)
+          .attr('x2', (d) => d.target.x)
+          .attr('y2', (d) => d.target.y);
+      }
+
+      // 交互
+      let drag = (simulation) => {
+        const dragStart = (event) => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+        };
+        const dragged = (event) => {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        };
+        const dragEnd = (event) => {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+        };
+        return d3
+          .drag()
+          .on('start', dragStart)
+          .on('drag', dragged)
+          .on('end', dragEnd);
+      };
+
+      // 渲染
+      const svg = d3
+        .select('#chart')
+        .style('background-color', 'white')
+        .attr('width', 1000)
+        .attr('height', 1000);
+      const polygonPath = svg
+        .append('g')
+        .attr('id', 'polygon')
+        .append('path')
+        .attr('fill', '#F7F7F7')
+        .attr('stroke', 'gray')
+        .attr('stroke-width', 6)
+        .attr('d', 'M' + polygon.join('L') + 'Z');
+      const link = svg
+        .append('g')
+        .attr('stroke', '#999')
+        .attr('stroke-opacity', 0.4)
+        .selectAll('line')
+        .data(links)
+        .join('line')
+        .attr('stroke-width', 1);
+      const node = svg
+        .append('g')
+        .attr('stroke', 'gray')
+        .attr('stroke-width', nodeStrokeWidth)
+        .selectAll('circle')
+        .data(nodes)
+        .join('circle')
+        .attr('r', nodeRadius)
+        .attr('fill', '#26C398')
+        .call(drag(simulation));
+      node.append('title').text((d) => d.id);
+    </script>
+  </body>
+</html>
