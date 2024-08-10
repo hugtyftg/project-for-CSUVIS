@@ -1,0 +1,197 @@
+{
+  "nodes": [
+    {
+      "id": "A",
+      "level": 1,
+      "children": [
+        {
+          "id": "A_1",
+          "level": 2,
+          "children": [
+            {
+              "id": "A_1_1",
+              "level": 3
+            },
+            {
+              "id": "A_1_2",
+              "level": 3
+            },
+            {
+              "id": "A_1_3",
+              "level": 3
+            },
+            {
+              "id": "A_1_4",
+              "level": 3
+            }
+          ]
+        },
+        {
+          "id": "A_2",
+          "level": 2,
+          "children": [
+            {
+              "id": "A_2_1",
+              "level": 3
+            },
+            {
+              "id": "A_2_2",
+              "level": 3
+            },
+            {
+              "id": "A_2_3",
+              "level": 3
+            }
+          ]
+        },
+        {
+          "id": "A_3",
+          "level": 2,
+          "children": [
+            {
+              "id": "A_3_1",
+              "level": 3
+            },
+            {
+              "id": "A_3_2",
+              "level": 3
+            },
+            {
+              "id": "A_3_3",
+              "level": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": "C",
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": "D",
+      "level": 1,
+      "children": []
+    }
+  ],
+  "links": [
+    {
+      "src_ip": "A",
+      "dst_ip": "B"
+    },
+    {
+      "src_ip": "A",
+      "dst_ip": "C"
+    },
+    {
+      "src_ip": "A",
+      "dst_ip": "D"
+    },
+    {
+      "src_ip": "C",
+      "dst_ip": "D"
+    },
+    {
+      "src_ip": "A",
+      "dst_ip": "A_1"
+    },
+    {
+      "src_ip": "A",
+      "dst_ip": "A_2"
+    },
+    {
+      "src_ip": "A",
+      "dst_ip": "A_3"
+    },
+    {
+      "src_ip": "A_1",
+      "dst_ip": "A_2"
+    },
+    {
+      "src_ip": "A_2",
+      "dst_ip": "A_3"
+    },
+    {
+      "src_ip": "A_1",
+      "dst_ip": "A_1_1"
+    },
+    {
+      "src_ip": "A_1",
+      "dst_ip": "A_1_2"
+    },
+    {
+      "src_ip": "A_1",
+      "dst_ip": "A_1_3"
+    },
+    {
+      "src_ip": "A_1",
+      "dst_ip": "A_1_4"
+    },
+    {
+      "src_ip": "A_1_1",
+      "dst_ip": "A_1_2"
+    },
+    {
+      "src_ip": "A_1_1",
+      "dst_ip": "A_1_3"
+    },
+    {
+      "src_ip": "A_1_2",
+      "dst_ip": "A_1_4"
+    },
+    {
+      "src_ip": "A_1_3",
+      "dst_ip": "A_1_4"
+    },
+    {
+      "src_ip": "A_2",
+      "dst_ip": "A_2_1"
+    },
+    {
+      "src_ip": "A_2",
+      "dst_ip": "A_2_2"
+    },
+    {
+      "src_ip": "A_2",
+      "dst_ip": "A_2_3"
+    },
+    {
+      "src_ip": "A_2_1",
+      "dst_ip": "A_2_2"
+    },
+    {
+      "src_ip": "A_2_2",
+      "dst_ip": "A_2_3"
+    },
+    {
+      "src_ip": "A_2_1",
+      "dst_ip": "A_2_3"
+    },
+    {
+      "src_ip": "A_3",
+      "dst_ip": "A_3_1"
+    },
+    {
+      "src_ip": "A_3",
+      "dst_ip": "A_3_2"
+    },
+    {
+      "src_ip": "A_3",
+      "dst_ip": "A_3_3"
+    },
+    {
+      "src_ip": "A_3_1",
+      "dst_ip": "A_3_2"
+    },
+    {
+      "src_ip": "A_3_2",
+      "dst_ip": "A_3_3"
+    }
+  ]
+}
