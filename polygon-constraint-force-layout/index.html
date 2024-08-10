@@ -21,17 +21,11 @@
     <script type="module">
       import data from './data/mock.js';
 
-      // 样式配置
-      let width = 200;
-      let height = width;
-      const nodeStrokeWidth = 1;
-      const nodeRadius = 5;
-
-      // 图数据
+      // 1.输入图数据，即具有唯一id标识的nodes和links
       const nodes = data.nodes;
       const links = data.links;
 
-      // 多边形数据
+      // 2.输入多边形顶点数据
       let polygon = [
         [800.5199476556365, 460.74438869020344],
         [663.4940667427518, 443.50564666079856],
@@ -40,10 +34,10 @@
         [800.5199476556365, 460.74438869020344],
       ];
 
-      // 多边形质心
+      // 3.计算多边形质心
       const [polygonSiteX, polygonSiteY] = calculatePolygonCentroid(polygon);
 
-      // 布局计算
+      // 4.开启力导引模拟器
       const simulation = d3
         .forceSimulation(nodes)
         .force(
@@ -60,7 +54,7 @@
         .force('x', d3.forceX(polygonSiteX))
         .force('y', d3.forceY(polygonSiteY))
         .on('tick', ticked);
-      // 每次tick都进行多边形限制的力导引计算
+      // 5.每次布局迭代时进行多边形限制的力导引计算
       const posTicker = polygonConstraintAccessor(polygon, 5);
       function ticked() {
         node
@@ -79,7 +73,7 @@
           .attr('y2', (d) => d.target.y);
       }
 
-      // 交互
+      // 6.（可选）拖拽交互
       let drag = (simulation) => {
         const dragStart = (event) => {
           if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -102,7 +96,13 @@
           .on('end', dragEnd);
       };
 
-      // 渲染
+      // 7.（可选）样式配置
+      let width = 200;
+      let height = width;
+      const nodeStrokeWidth = 1;
+      const nodeRadius = 5;
+
+      // 8.渲染多边形与节点链接图
       const svg = d3
         .select('#chart')
         .style('background-color', 'white')
