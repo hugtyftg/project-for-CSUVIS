@@ -1,0 +1,18 @@
+:root {
+  --gap-grid: 10px;
+  --gap-info: 50px;
+  --gap-alg-title: 20px;
+  --border-radius-normal: 10px;
+  --color-node-new: red;
+  --color-node-old: gray;
+}
+html {
+  font-size: 20px;
+}
+.t-button {
+  margin: 0 5px;
+  border: 1px solid gray;
+}
+.t-input {
+  border-color: gray;
+}

@@ -33,11 +33,24 @@ pnpm start # 启动工程
 
 # 运行流程
 
-1. public/html 中注入wasm依赖文件——calcNode.js和calcNode.wasm（C++部分优化后，直接替换编译后的wasm文件即可）
-2. src/algorithm 向外暴露DynamicGraph类，用来开启worker线程，在后台用wasm开启计算线程，通过postMessage与主线程通信
-3. src/worker 作为主线程，用来和子线程通信，接受各个时间片的图布局计算结果
-4. src/store 存储每个时间片内的图点边数据
-5. src/component 封装图渲染组件，支持多种交互
+1. **public/html 中注入wasm依赖文件——calcNode.js和calcNode.wasm（C++部分优化后，直接替换编译后的wasm文件即可）**
+
+2. **src/algorithm 向外暴露DynamicGraph类，用来开启worker线程，在后台用wasm开启计算线程，通过postMessage与主线程通信**
+
+3. **src/worker 作为主线程，用来和子线程通信，接受各个时间片的图布局计算结果**
+
+4. **src/store 存储每个时间片内的图点边数据**
+
+5. **src/component 封装图渲染组件，支持多种交互**
+
+   **其中，我们的图组件内，使用布局算法的方式如下**
+
+   1. **传入一个DynamicGraph实例开启worker子线程计算下一时间片点边数据**
+   2. **切换时间片时将数据存入store**
+   3. **监测到store内数据发生变化时，图组件内节点和连边数据随之变化，并且重新计算指标**
+
 6. src/metrics 各种衡量动态图布局质量的指标
+
 7. src/router 路由配置文件
+
 8. src/config 图布局参数配置、样式配置

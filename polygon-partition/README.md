@@ -18,8 +18,8 @@
 
 ```
 npm i -g pnpm
-pnpm i
-pnpm dev
+yarn
+yarn dev
 ```
 
 # 步骤说明
