@@ -37,7 +37,7 @@
         [663.4940667427518, 443.50564666079856],
         [693.8467788929881, 258.61407502480455],
         [856.9659737635482, 341.2507784190612],
-        [800.5199476556365, 460.74438869020344],
+        [800.5199476556365, 460.74438869020344], // 为了闭合图形，最后一个点和第一个点重复
       ];
 
       // 3.计算多边形质心
@@ -65,11 +65,11 @@
       function ticked() {
         node
           .attr('cx', (d) => {
-            d.x = posTicker(5, nodeStrokeWidth, d.y, d.x, 'x');
+            // d.x = posTicker(5, nodeStrokeWidth, d.y, d.x, 'x');
             return d.x;
           })
           .attr('cy', (d) => {
-            d.y = posTicker(5, nodeStrokeWidth, d.x, d.y, 'y');
+            // d.y = posTicker(5, nodeStrokeWidth, d.x, d.y, 'y');
             return d.y;
           });
         link
