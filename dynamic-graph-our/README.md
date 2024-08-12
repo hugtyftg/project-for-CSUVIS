@@ -54,3 +54,98 @@ pnpm start # 启动工程
 7. src/router 路由配置文件
 
 8. src/config 图布局参数配置、样式配置
+
+# 效果
+
+<img src="README.assets/our-b_19t.gif" alt="our-b_19t" style="zoom:50%;" />
+
+<img src="README.assets/our-price100_20t.gif" alt="our-price100_20t" style="zoom:50%;" />
+
+# 具体使用
+
+## Experiment视图怎么切换算法
+
+更换传入的算法名称即可，比如更改为compareConfig[0].name或直接输入对应的字符串
+
+<img src="README.assets/image-20240812210923955.png" alt="image-20240812210923955" style="zoom:50%;" />
+
+<img src="README.assets/image-20240812204250526.png" alt="image-20240812204250526" style="zoom:50%;" />
+
+## 怎么一次性呈现某个算法在某个数据集上的运行效果gallery
+
+### 1.运行到某个感兴趣的时间片时，下载已经计算过的时间片的布局结果
+
+<img src="README.assets/image-20240812212631799.png" alt="image-20240812212631799" style="zoom:50%;" />
+
+<img src="README.assets/image-20240812212731717.png" alt="image-20240812212731717" style="zoom:50%;" />
+
+### 2.将下载后的数据根据所用算法和数据集名称放入对应的data/overview文件夹中
+
+<img src="README.assets/image-20240812213044139.png" alt="image-20240812213044139" style="zoom:50%;" />
+
+### 3.修改Overview中读取的数据路径
+
+<img src="README.assets/image-20240812220314730.png" alt="image-20240812220314730" style="zoom:50%;" />
+
+### 4.浏览器输入http://localhost:3000/overview查看gallery
+
+![image-20240812220300684](README.assets/image-20240812220300684.png)
+
+### 5.下载gallery整图
+
+<img src="README.assets/image-20240812213534332.png" alt="image-20240812213534332" style="zoom:50%;" />
+
+<img src="README.assets/image-20240812213612891.png" alt="image-20240812213612891" style="zoom:50%;" />
+
+
+
+# 进阶——如何在前端工程内嵌入wasm
+
+## 1.引入编译后的calcNode.wasm文件和胶水文件calcNode.js
+
+<img src="README.assets/image-20240812230046067.png" alt="image-20240812230046067" style="zoom:50%;" />
+
+<img src="README.assets/image-20240812230232579.png" alt="image-20240812230232579" style="zoom:50%;" />
+
+## 2.定义worker线程执行wasm
+
+需要下列步骤：
+
+1. 根据需要定义变量存储数据，并初始处理
+2. 定义用于通信的变量，需要用特殊数据类型如Float32Array
+3. 为上述定义的用于通信的变量，分配内存
+4. 运行引入的js胶水文件内的函数，如calcPosition
+5. 释放变量内存
+6. 接收wasm计算结果并通过postMessage传递给主线程
+
+<img src="README.assets/image-20240812230702127.png" alt="image-20240812230702127" style="zoom:50%;" />
+
+
+
+## 3.主线程异步接收子线程返回的数据，并抛出Promise
+
+```
+import { LinkInfo, NodeInfo, NodePosition } from '../algorithm/types';
+localStorage.setItem('isWorkerCalculating', 'no');
+
+const worker: Worker = new Worker('./worker.js');
+function calcNodeWithWorker() {
+  let resolver: (result: NodePosition[]) => void;
+
+  worker.onmessage = ({ data }): void => {
+    resolver(data);
+  };
+
+  return (graphInfo: { node: NodeInfo[]; link: LinkInfo[] }) =>
+    new Promise((resolve: (value: NodePosition[]) => void): void => {
+      resolver = resolve;
+      worker.postMessage(graphInfo);
+    });
+}
+
+export default calcNodeWithWorker();
+```
+
+## 4.封装主线程内异步返回数据的promise
+
+<img src="README.assets/image-20240812231500436.png" alt="image-20240812231500436" style="zoom:50%;" />

@@ -24,7 +24,7 @@ function calculateGraph(node, link) {
   const linkArray = new Int32Array(linkInfo);
   const nodeNum = node.length;
   const linkNum = link.length;
-
+  // 分配内存
   const calcPosition = Module.cwrap('calcPosition', 'null', [
     'number',
     'number',
@@ -64,6 +64,7 @@ function calculateGraph(node, link) {
     item.x = outputArray[index * 2];
     item.y = outputArray[index * 2 + 1];
   });
+  // 释放内存
   Module._free(nodePosPtr);
   Module._free(nodeInfoPtr);
   Module._free(linkPtr);
@@ -72,6 +73,7 @@ function calculateGraph(node, link) {
   return retNodePosition;
 }
 
+// 接受信息
 self.onmessage = ({ data: { node, link } }) => {
   console.log('receive graph');
   const data = calculateGraph(node, link);

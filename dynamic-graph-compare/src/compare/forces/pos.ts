@@ -1,13 +1,21 @@
-import {Force} from "d3-force";
-import {LinkDatum, NodeDatum} from "../types";
+import { Force } from 'd3-force';
+import { LinkDatum, NodeDatum } from '../types';
 
 function forcePos(): Force<NodeDatum, LinkDatum> {
   let nodes: NodeDatum[];
 
   function force(alpha: number) {
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       let prevNode = node.prev;
-      if (prevNode && prevNode.x !== undefined && node.x !== undefined && prevNode.y !== undefined && node.y !== undefined && node.vx && node.vy) {
+      if (
+        prevNode &&
+        prevNode.x !== undefined &&
+        node.x !== undefined &&
+        prevNode.y !== undefined &&
+        node.y !== undefined &&
+        node.vx &&
+        node.vy
+      ) {
         let deltaVx = (prevNode.x - node.x) * alpha;
         let deltaVy = (prevNode.y - node.y) * alpha;
         node.vx += deltaVx;
@@ -18,7 +26,7 @@ function forcePos(): Force<NodeDatum, LinkDatum> {
 
   force.initialize = function (_: NodeDatum[]) {
     nodes = _;
-  }
+  };
 
   return force;
 }
