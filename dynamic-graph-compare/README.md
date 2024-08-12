@@ -1,3 +1,7 @@
+# 场景
+
+
+
 # 使用说明
 
 前端环境：node v18及以上
@@ -31,7 +35,7 @@ pnpm start # 启动工程
 6. 实时秒表计时
 7. 实时图规模统计
 
-# 运行流程
+# 对比算法运行流程
 
 1. src/compare 对比算法，基于**G6自定义图布局**实现并注入
 
@@ -54,4 +58,44 @@ pnpm start # 启动工程
 4. src/router 路由配置文件
 
 5. src/config 图布局参数配置、样式配置
+
+# 效果
+
+<img src="README.assets/our-eva_11t.gif" alt="our-eva_11t" style="zoom:50%;" /><img src="README.assets/age-b_19t.gif" alt="age-b_19t" style="zoom:50%;" />
+
+# 具体使用
+
+## Experiment视图怎么切换算法
+
+更换传入的算法名称即可，比如更改为compareConfig[0].name或直接输入对应的字符串
+
+<img src="README.assets/image-20240812210923955.png" alt="image-20240812210923955" style="zoom:50%;" />
+
+<img src="README.assets/image-20240812204250526.png" alt="image-20240812204250526" style="zoom:50%;" />
+
+## 怎么一次性呈现某个算法在某个数据集上的运行效果gallery
+
+### 1.运行到某个感兴趣的时间片时，下载已经计算过的时间片的布局结果
+
+<img src="README.assets/image-20240812212631799.png" alt="image-20240812212631799" style="zoom:50%;" />
+
+<img src="README.assets/image-20240812212731717.png" alt="image-20240812212731717" style="zoom:50%;" />
+
+### 2.将下载后的数据根据所用算法和数据集名称放入对应的data/overview文件夹中
+
+<img src="README.assets/image-20240812213044139.png" alt="image-20240812213044139" style="zoom:50%;" />
+
+### 3.修改Overview中读取的数据路径
+
+<img src="README.assets/image-20240812213354225.png" alt="image-20240812213354225" style="zoom:50%;" />
+
+### 4.浏览器输入http://localhost:3000/overview查看gallery
+
+![image-20240812213505613](README.assets/image-20240812213505613.png)
+
+### 5.下载gallery整图
+
+<img src="README.assets/image-20240812213534332.png" alt="image-20240812213534332" style="zoom:50%;" />
+
+<img src="README.assets/image-20240812213612891.png" alt="image-20240812213612891" style="zoom:50%;" />
 

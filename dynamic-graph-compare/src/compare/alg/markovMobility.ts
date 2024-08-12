@@ -121,7 +121,7 @@ function markovMobility(
   let lastSum = 0;
   let res: Record<ID, number> = {};
 
-  // p: hard copy of p0
+  // p: hard copy of p0 深拷贝
   let p: Record<ID, number> = {};
   for (let node in p0) {
     p[node] = p0[node];

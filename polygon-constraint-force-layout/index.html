@@ -21,6 +21,12 @@
     <script type="module">
       import data from './data/mock.js';
 
+      // 7.（可选）样式配置
+      let width = 200;
+      let height = width;
+      const nodeStrokeWidth = 1;
+      const nodeRadius = 5;
+
       // 1.输入图数据，即具有唯一id标识的nodes和links
       const nodes = data.nodes;
       const links = data.links;
@@ -95,12 +101,6 @@
           .on('drag', dragged)
           .on('end', dragEnd);
       };
-
-      // 7.（可选）样式配置
-      let width = 200;
-      let height = width;
-      const nodeStrokeWidth = 1;
-      const nodeRadius = 5;
 
       // 8.渲染多边形与节点链接图
       const svg = d3
