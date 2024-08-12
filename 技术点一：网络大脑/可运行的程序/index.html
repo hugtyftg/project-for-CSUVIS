@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画布分割算法+区域限制的力导引组件</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <!-- 功能区 -->
+  <div id="function">
+    <!-- 搜索 -->
+    <div id="search">
+      <div id="search-by-ip">
+        <input type="text" id="ip" placeholder="ip">
+        <button>搜索IP</button>
+      </div>
+      <div id="search-by-pod">
+        <input type="text" id="az" placeholder="az">
+        <input type="text" id="pod" placeholder="pod">
+        <button>搜索POD</button>
+      </div>
+    </div>
+    <!-- 图例 -->
+    <div id="legend"></div>
+  </div>
+  <div id="main"></div>
+  <script type="module" src="./src/app/index.ts"></script>
+</body>
+
+</html>
