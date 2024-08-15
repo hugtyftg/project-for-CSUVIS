@@ -77,7 +77,7 @@ const render = (opts: RenderOpts) => {
     .attr('fill', (d: any) => {
       if (d['data']['hierarchy'] === 'az') {
         return interpolateRdBu(colorScale(d.value));
-      } else if (d['data']['hierarchy'] === 'pod') {
+      } else if (d['data']['hierarchy'] === 'pod_name') {
         if (d.data.name === 'cnt') {
           return 'pink';
         }

@@ -28,24 +28,39 @@ yarn dev
 
 # 步骤说明
 
-1. 输入树形结构数据
+1. 将点异质网络数据处理成层级结构
 
-   ```typescript
-   export interface NonBottomLevel {
-     name: string;
-     hierarchy: string;
-     children: NonBottomLevel[];
-     num?: number;
-   }
-   
-   export interface BottomLevel {
-     name: string;
-     hierarchy: string;
-     nodes: any[];
-     edges: any[];
-     num: number;
-   }
-   ```
+配置项：数据，层级数量，各层级的索引和key信息
+
+比如对于3层结构region-az-pod的网络大脑数据，配置如下
+
+```ts
+let hierarchalData = InitData(originData, 3, [
+  { index: 0, key: 'region' },
+  { index: 1, key: 'az' },
+  { index: 2, key: 'pod_name' },
+]);
+```
+
+返回层级数据结构符合`BoneStructure`且只有最底层的叶子节点结构为`BottomStructure`
+
+```ts
+// 层级结构基本信息
+export interface LevelStructure {
+  name: string;
+  hierarchy: string;
+}
+// 非底层结构
+export interface BoneStructure extends LevelStructure {
+  children: BoneStructure[] | BottomStructure[];
+}
+// 底层结构
+export interface BottomStructure extends LevelStructure {
+  num: number;
+  [key: string]: any;
+}
+
+```
 
 2. 统计树形结构各层级权重
 
