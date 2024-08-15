@@ -90,7 +90,6 @@ function Experiment({ isFullScreen, toggleFullScreen }: PageProps) {
       {/* 呈现对比算法的组件 */}
       <S.CompareAlgContainer className="compare-layout">
         <CompareNodeGraph
-          key={compareConfig[2].id}
           data={data}
           algorithm={compareConfig[2].name}
           panelTime={0}

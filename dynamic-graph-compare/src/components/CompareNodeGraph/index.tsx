@@ -71,9 +71,10 @@ const CompareNodeGraph = forwardRef(function (
   parentRef: any
 ) {
   const datasetName = localStorage.getItem('datasetName');
-  const curDatasetInfo = datasetConfigs.find(
-    (item) => item.name === datasetName
-  );
+  const curDatasetInfo =
+    datasetConfigs.find((item) => item.name === datasetName) ??
+    datasetConfigs[0];
+
   // 收集某个算法在某个数据集下的所有数据
   const allDataRef = useRef<any[]>([]);
   // 存放G6生成的图实例

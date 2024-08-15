@@ -36,8 +36,8 @@ const config: StyleCfg = {
 };
 // https://blog.csdn.net/m0_51431448/article/details/130145983
 function Overview({ isFullScreen, toggleFullScreen }: PageProps) {
-  const algorithm = 'g6';
-  const datasetName = datasetConfigs[3].name;
+  const algorithm = 'degree';
+  const datasetName = datasetConfigs[0].name;
   const [graphData, setGraphData] = useState<OverviewDatum[]>([]);
   // const [graphSrc, setGraphSrc] = useState<string>('');
   useEffect(() => {
@@ -111,7 +111,6 @@ function Overview({ isFullScreen, toggleFullScreen }: PageProps) {
               margin: 10,
             }}
           >
-            {/* <h3>current time: {datum.time}</h3> */}
             <div
               style={{
                 lineHeight: 1.5,
