@@ -18,11 +18,16 @@ const setting = {
   const res = await fetch(datasetName);
   const originData = await res.json();
   // 1.树形结构
-  let hierarchalData = InitData(originData, 3, [
-    { index: 0, key: 'region' },
-    { index: 1, key: 'az' },
-    { index: 2, key: 'pod_name' },
-  ]);
+  let hierarchalData = InitData(
+    originData,
+    // 3,
+    2,
+    [
+      { index: 0, key: 'region' },
+      { index: 1, key: 'az' },
+      // { index: 2, key: 'pod_name' },
+    ]
+  );
 
   // 2.统计树形结构各层级权重
   let data = hierarchy(hierarchalData).sum((d: any) => d.num ?? 0);
@@ -49,22 +54,24 @@ const setting = {
   /* ------------------cnt中心化----------------- */
 
   // 6.（可选）设置分割区域根据权重设置颜色插值范围
-  let min = Infinity; // 记录最少的设备数目
-  let max = 0; // 记录最多的设备数目
-  const nodes: any = [];
-  (data.children as any[]).forEach((az: any) => {
-    nodes.push(az);
-    az.children.forEach((pod: any) => {
-      if (pod.value < min) {
-        min = pod.value;
-      }
-      if (pod.value > max) {
-        max = pod.value;
-      }
-      pod['isAlarming'] = false; // TODO：和告警结合
-      nodes.push(pod);
-    });
-  });
+  // let min = Infinity; // 记录最少的设备数目
+  // let max = 0; // 记录最多的设备数目
+  // const nodes: any = [];
+  // (data.children as any[]).forEach((az: any) => {
+  //   nodes.push(az);
+  //   az.children.forEach((pod: any) => {
+  //     if (pod.value < min) {
+  //       min = pod.value;
+  //     }
+  //     if (pod.value > max) {
+  //       max = pod.value;
+  //     }
+  //     pod['isAlarming'] = false; // TODO：和告警结合
+  //     nodes.push(pod);
+  //   });
+  // });
+  const min = 40,
+    max = 80;
   let colorScale = scaleLinear()
     .domain([min, max])
     .range([0.8, 0.55])
