@@ -3,6 +3,7 @@ import { scaleLinear } from 'd3-scale';
 import render from './render';
 import { hierarchy } from 'd3-hierarchy';
 import InitData from './initData';
+import getFlattenBottom from './flattenBottom';
 
 const setting = {
   width: 2000,
@@ -25,6 +26,9 @@ const setting = {
 
   // 2.统计树形结构各层级权重
   let data = hierarchy(hierarchalData).sum((d: any) => d.num ?? 0);
+
+  // 将最后一层展平
+  let flattenBottomData = getFlattenBottom(data as any);
 
   // 3.定义矩形边界几何信息
   let rectanglePolygon = [

@@ -30,7 +30,7 @@ yarn dev
 
 1. 将点异质网络数据处理成层级结构
 
-配置项：数据，层级数量，各层级的索引和key信息
+配置项：数据，层级数量，各层级的索引（TODO:连续且正序）和key信息
 
 比如对于3层结构region-az-pod的网络大脑数据，配置如下
 
@@ -74,5 +74,41 @@ export interface BottomStructure extends LevelStructure {
 
 7. 渲染各多边形区域及其标签
 
+# 效果
 
-效果
+## 3层 Region-AZ-POD
+
+### 层级业务信息配置
+
+```ts
+  let hierarchalData = InitData(originData, 3, [
+    { index: 0, key: 'region' },
+    { index: 1, key: 'az' },
+    { index: 2, key: 'pod_name' },
+  ]);	
+```
+
+### 层级数据
+
+<img src="README.assets/image-20240816003519639.png" alt="image-20240816003519639" style="zoom:50%;" />
+
+### 渲染结果
+
+<img src="README.assets/image-20240816003545606.png" alt="image-20240816003545606" style="zoom:50%;" />
+
+## 2层 Region-AZ
+
+### 层级业务信息配置
+
+```ts
+  let hierarchalData = InitData(originData, 2, [
+    { index: 0, key: 'region' },
+    { index: 1, key: 'az' },
+  ]);
+```
+
+### 层级数据
+
+<img src="README.assets/image-20240816002956028.png" alt="image-20240816002956028" style="zoom:50%;" />
+
+### 渲染结果
