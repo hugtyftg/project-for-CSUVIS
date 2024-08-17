@@ -27,9 +27,6 @@ const setting = {
   // 2.统计树形结构各层级权重
   let data = hierarchy(hierarchalData).sum((d: any) => d.num ?? 0);
 
-  // 将最后一层展平
-  let flattenBottomData = getFlattenBottom(data as any);
-
   // 3.定义矩形边界几何信息
   let rectanglePolygon = [
     [0, 0],
@@ -73,13 +70,17 @@ const setting = {
     .range([0.8, 0.55])
     .clamp(true);
 
+  // 将最后一层展平
+  let flattenBottomData = getFlattenBottom(data as any);
+
   // 7.渲染各多边形区域及其标签
   render({
     selector: '#container',
     setting,
     treemapCenter,
     rectanglePolygon,
-    nodes,
+    nodes: flattenBottomData,
+    // nodes,
     colorScale,
     min,
     max,
