@@ -20,12 +20,12 @@ const setting = {
   // 1.树形结构
   let hierarchalData = InitData(
     originData,
-    // 3,
-    2,
+    3,
+    // 2,
     [
       { index: 0, key: 'region' },
       { index: 1, key: 'az' },
-      // { index: 2, key: 'pod_name' },
+      { index: 2, key: 'pod_name' },
     ]
   );
 

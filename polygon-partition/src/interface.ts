@@ -5,8 +5,13 @@ export interface LevelInfo {
 
 export interface Device {
   index: number;
-  az: string;
-  pod_name: string;
+  az: string | undefined;
+  pod_name: string | undefined;
+  type: string | undefined;
+  role: string | undefined;
+  mgmt_ip: string;
+  is_alarming: boolean;
+  degree: number;
 }
 export interface GroupData {
   compressionRatio: number;
@@ -15,8 +20,15 @@ export interface GroupData {
 }
 export interface GroupNode {
   groupIndex: number;
+  isHyperNode: boolean;
+  size: number;
   children: Device[];
+  isPerfectPod: boolean;
+  /* 多层级适配时会修改 */
+  az: string;
+  pod: string;
 }
+
 export interface GroupLink {
   source: number;
   target: number;
