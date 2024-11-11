@@ -26,55 +26,60 @@ function InitData(
     children: [],
   };
 
+  // 遍历每个节点建立层级结构
   for (let i = 0; i < nodes.length; i++) {
-    // debugger;
     const curNode = nodes[i];
 
-    for (const levelInfo of levelInfoList) {
-      let count = 0;
-      let targetLevelStructure: BoneStructure | BottomStructure = result;
-      // 找到目标层级，如果没有就一直创建
-      while (count < levelInfo.index) {
-        count++;
-        let hierarchyKey = levelInfoList[count].key;
-        let nextIndex = targetLevelStructure.children.findIndex(
-          (child: LevelStructure) => {
-            return child.name === curNode.children[0][hierarchyKey];
-          }
-        );
-        if (nextIndex === -1) {
-          const newChild = {
-            name: curNode.children[0][hierarchyKey],
-            hierarchy: hierarchyKey,
-          };
-          targetLevelStructure.children.push(newChild);
-          nextIndex = targetLevelStructure.children.length - 1;
-        }
-        targetLevelStructure = targetLevelStructure.children[nextIndex];
+    let targetLevelStructure = result;
+    for (let count = 1; count < levelInfoList.length; count++) {
+      const levelInfo = levelInfoList[count];
+      const hierarchyKey = levelInfo.key;
 
-        if (count === levelNum - 1) {
-          // 是最后一层
-          if (!targetLevelStructure.hasOwnProperty('num')) {
-            Object.defineProperty(targetLevelStructure, 'num', {
-              enumerable: true,
-              configurable: true,
-              writable: true,
-              value: 1,
-            });
-          } else {
-            (targetLevelStructure as BottomStructure).num++;
-          }
-        } else {
-          // 是中间层
-          if (!targetLevelStructure.hasOwnProperty('children')) {
-            Object.defineProperty(targetLevelStructure, 'children', {
-              enumerable: true,
-              configurable: true,
-              writable: true,
-              value: [],
-            });
-          }
+      // 寻找是否有该level item（BoneStructure）或者（BottomStructure），
+      let index = targetLevelStructure.children.findIndex(
+        (child: LevelStructure) => {
+          return child.name === curNode.children[0][hierarchyKey];
         }
+      );
+
+      // 如果没有则创建一个并且push入当前target children
+      if (index === -1) {
+        const newLevelItem = {
+          name: curNode.children[0][hierarchyKey],
+          hierarchy: hierarchyKey,
+        };
+        targetLevelStructure.children.push(newLevelItem as any);
+        index = targetLevelStructure.children.length - 1;
+      }
+
+      const curLevelItem = targetLevelStructure.children[index];
+
+      // 非最后一层
+      if (count !== levelInfoList.length - 1) {
+        // 新创建出来的没有children property
+        if (!curLevelItem.hasOwnProperty('children')) {
+          Object.defineProperty(curLevelItem, 'children', {
+            value: [],
+            writable: true,
+            enumerable: true,
+            configurable: true,
+          });
+        }
+        // 更新下一次迭代所基于的targetLevelItem
+        targetLevelStructure = curLevelItem as BoneStructure;
+      } else {
+        // 最后一层
+        // 新创建出来的没有children property
+        if (!curLevelItem.hasOwnProperty('num')) {
+          Object.defineProperty(curLevelItem, 'num', {
+            value: 0,
+            writable: true,
+            enumerable: true,
+            configurable: true,
+          });
+        }
+        // 为每个到达最终位置的节点添加num
+        (curLevelItem as BottomStructure).num++;
       }
     }
   }
