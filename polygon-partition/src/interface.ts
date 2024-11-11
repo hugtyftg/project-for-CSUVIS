@@ -8,7 +8,7 @@ export interface Device {
   az: string;
   pod_name: string;
 }
-export interface OriginData {
+export interface GroupData {
   compressionRatio: number;
   groupList: GroupNode[];
   groupLinks: GroupLink[];
@@ -24,6 +24,7 @@ export interface GroupLink {
 
 // 层级结构基本信息
 export interface LevelStructure {
+  id: string;
   name: string;
   hierarchy: string;
 }

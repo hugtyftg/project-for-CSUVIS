@@ -2,7 +2,7 @@ import markovMobility from './compareAlg/markovMobility';
 import ageMobility from './compareAlg/ageMobility';
 import pinningWeightMobility from './compareAlg/pinningWeightMobility';
 import degreeMobility from './compareAlg/degreeModility';
-import { LinkDatum, NodeDatum, OriginData } from './types';
+import { LinkDatum, NodeDatum, GroupData } from './types';
 import initNodePos from './initNodePos';
 type Alg = 'age' | 'pinning' | 'degree' | 'markov';
 const AlgMap = new Map([
@@ -22,7 +22,7 @@ class CompareGraph {
 
   // key
   key: string = 'name';
-  constructor(algName: Alg, readonly data: OriginData) {
+  constructor(algName: Alg, readonly data: GroupData) {
     this.algorithm = AlgMap.get(algName);
   }
   getTimeSlice(time: number) {

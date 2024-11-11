@@ -1,13 +1,14 @@
 import {
   LevelInfo,
-  OriginData,
+  GroupData,
   LevelStructure,
   BoneStructure,
   BottomStructure,
 } from './interface';
+import { v7 as uuid } from 'uuid';
 
 function InitData(
-  originData: OriginData,
+  originData: GroupData,
   levelNum: number,
   levelInfoList: LevelInfo[]
 ) {
@@ -21,6 +22,7 @@ function InitData(
   });
 
   let result: BoneStructure = {
+    id: uuid(),
     name: levelInfoList[0].key,
     hierarchy: levelInfoList[0].key,
     children: [],
@@ -45,6 +47,7 @@ function InitData(
       // 如果没有则创建一个并且push入当前target children
       if (index === -1) {
         const newLevelItem = {
+          id: uuid(),
           name: curNode.children[0][hierarchyKey],
           hierarchy: hierarchyKey,
         };
@@ -71,15 +74,24 @@ function InitData(
         // 最后一层
         // 新创建出来的没有children property
         if (!curLevelItem.hasOwnProperty('num')) {
-          Object.defineProperty(curLevelItem, 'num', {
-            value: 0,
-            writable: true,
-            enumerable: true,
-            configurable: true,
+          Object.defineProperties(curLevelItem, {
+            num: {
+              value: 0,
+              writable: true,
+              enumerable: true,
+              configurable: true,
+            },
+            nodes: {
+              value: [],
+              writable: true,
+              enumerable: true,
+              configurable: true,
+            },
           });
         }
         // 为每个到达最终位置的节点添加num
         (curLevelItem as BottomStructure).num++;
+        (curLevelItem as BottomStructure).nodes.push(curNode);
       }
     }
   }

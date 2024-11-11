@@ -11,7 +11,7 @@ import {
   LinkDatum,
   MetricsType,
   NodeDatum,
-  OriginData,
+  GroupData,
   ageMobility,
   degreeMobility,
   markovMobility,
@@ -60,7 +60,7 @@ const config: StyleCfg = {
 // node中用于唯一标识id的键
 const key = 'name';
 type CompareNodeGraphType = {
-  data: OriginData;
+  data: GroupData;
   algorithm: string[];
   panelTime: number;
   calcMetrics: boolean;

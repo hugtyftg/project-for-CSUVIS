@@ -40,7 +40,7 @@ export interface OriginLink {
   start: number;
   end: number;
 }
-export interface OriginData {
+export interface GroupData {
   nodes: OriginNode[];
   links: OriginLink[];
 }
