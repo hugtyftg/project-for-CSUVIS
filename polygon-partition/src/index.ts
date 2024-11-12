@@ -23,11 +23,12 @@ const setting = {
     3,
     // 2,
     [
-      { index: 0, key: 'region' },
-      { index: 1, key: 'az' },
-      { index: 2, key: 'pod_name' },
+      { index: 0, key: 'region', hierarchy: 'region' },
+      { index: 1, key: 'az', hierarchy: 'az' },
+      { index: 2, key: 'pod_name', hierarchy: 'pod' },
     ]
   );
+  console.log(hierarchalData);
 
   // 2.统计树形结构各层级权重
   let data = hierarchy(hierarchalData).sum((d: any) => d.num ?? 0);

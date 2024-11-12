@@ -24,7 +24,7 @@ function InitData(
   let result: BoneStructure = {
     id: uuid(),
     name: levelInfoList[0].key,
-    hierarchy: levelInfoList[0].key,
+    hierarchy: levelInfoList[0].hierarchy,
     children: [],
   };
 
@@ -49,7 +49,7 @@ function InitData(
         const newLevelItem = {
           id: uuid(),
           name: curNode.children[0][hierarchyKey],
-          hierarchy: hierarchyKey,
+          hierarchy: levelInfo.hierarchy,
         };
         targetLevelStructure.children.push(newLevelItem as any);
         index = targetLevelStructure.children.length - 1;

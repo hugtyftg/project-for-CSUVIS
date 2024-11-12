@@ -1,6 +1,7 @@
 export interface LevelInfo {
   index: number;
   key: string;
+  hierarchy: string;
 }
 
 export interface Device {
